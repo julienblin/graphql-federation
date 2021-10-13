@@ -5,6 +5,10 @@ import { Covid19Api } from "./covid19-api";
 const typeDefs = gql`
   extend type Country @key(fields: "countryCode") {
     countryCode: String! @external
+    covid19: CountryCovid19
+  }
+
+  type CountryCovid19 {
     totalConfirmed: Int
     totalDeath: Int
   }
@@ -12,8 +16,11 @@ const typeDefs = gql`
 
 const resolvers = {
   Country: {
-    async __resolveReference(reference, { dataSources }) {
-      return dataSources.covid19api.summaryLoader.load(reference.countryCode);
+    async __resolveReference(country, { dataSources }) {
+      return {
+        ...country,
+        covid19: dataSources.covid19api.summaryLoader.load(country.countryCode),
+      };
     },
   },
 };
