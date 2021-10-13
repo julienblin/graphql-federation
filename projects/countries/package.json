@@ -9,6 +9,7 @@
     "@apollo/federation": "^0.33.2",
     "apollo-datasource-rest": "^3.3.0",
     "apollo-server": "^3.4.0",
+    "dataloader": "^2.0.0",
     "graphql": "^15.6.1"
   },
   "devDependencies": {

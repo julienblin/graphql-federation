@@ -1,7 +1,7 @@
+import { buildSubgraphSchema } from "@apollo/federation";
 import { ApolloServer, gql } from "apollo-server";
-import { buildFederatedSchema } from "@apollo/federation";
+import { GraphQLResolveInfo } from "graphql";
 import { BattutaApi } from "./battuta-api";
-import { GraphQLFieldResolver, GraphQLResolveInfo } from "graphql";
 
 interface DataSources {
   battutaApi: BattutaApi;
@@ -21,11 +21,11 @@ type Resolver = (
 type Resolvers = Record<string, Record<string, Resolver>>;
 
 const typeDefs = gql`
-  type Query {
-    countries: [CountrySummary]
+  extend type Query {
+    countries(countryCodes: [String!]): [Country]
   }
 
-  type CountrySummary @key(fields: "countryCode") {
+  type Country @key(fields: "countryCode") {
     countryCode: String!
     name: String!
   }
@@ -34,18 +34,18 @@ const typeDefs = gql`
 const resolvers: Resolvers = {
   Query: {
     countries(root, args, { dataSources }) {
-      return dataSources.battutaApi.getCountrySummaries();
+      return dataSources.battutaApi.getCountries(args.countryCodes);
     },
   },
-  CountrySummary: {
-    __resolveReference(root, args, { dataSources }) {
-      return dataSources.battutaApi.getCountrySummary(args.countryCode);
+  Country: {
+    async __resolveReference(root, args, { dataSources }) {
+      return dataSources.battutaApi.countryLoader.load(args.countryCode);
     },
   },
 };
 
 const server = new ApolloServer({
-  schema: buildFederatedSchema([
+  schema: buildSubgraphSchema([
     {
       typeDefs,
       resolvers,

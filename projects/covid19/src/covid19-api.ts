@@ -1,4 +1,5 @@
 import { RESTDataSource } from "apollo-datasource-rest";
+import DataLoader from "dataloader";
 
 export class Covid19Api extends RESTDataSource {
   constructor() {
@@ -6,19 +7,26 @@ export class Covid19Api extends RESTDataSource {
     this.baseURL = "https://api.covid19api.com/";
   }
 
-  async getSummaries() {
-    const response = await this.get<Covid19SummaryResponse>("summary");
-    return response.Countries.map((x) => ({
-      countryCode: x.CountryCode,
-      totalConfirmed: x.TotalConfirmed,
-      totalDeath: x.TotalDeaths,
-    }));
-  }
+  summaryLoader = new DataLoader(
+    async (countryCodes: ReadonlyArray<string>) => {
+      const countrySummaryByCountryCodes = (
+        await this.get<Covid19SummaryResponse>("summary")
+      ).Countries.reduce(
+        (acc, cur) => ({ ...acc, [cur.CountryCode]: cur }),
+        {} as Record<string, Country>
+      );
 
-  async getASummary(countryCode: string) {
-    const summaries = await this.getSummaries();
-    return summaries.filter((x) => x.countryCode === countryCode);
-  }
+      return countryCodes.map((x) =>
+        countrySummaryByCountryCodes[x]
+          ? {
+              countryCode: countrySummaryByCountryCodes[x].CountryCode,
+              totalConfirmed: countrySummaryByCountryCodes[x].TotalConfirmed,
+              totalDeath: countrySummaryByCountryCodes[x].TotalDeaths,
+            }
+          : {}
+      );
+    }
+  );
 }
 
 export interface Covid19SummaryResponse {

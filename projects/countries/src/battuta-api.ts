@@ -1,4 +1,5 @@
 import { RequestOptions, RESTDataSource } from "apollo-datasource-rest";
+import DataLoader from "dataloader";
 
 export class BattutaApi extends RESTDataSource {
   constructor() {
@@ -10,18 +11,38 @@ export class BattutaApi extends RESTDataSource {
     request.params.append("key", process.env["BATTUTA_API_KEY"]!);
   }
 
-  async getCountrySummaries() {
+  countryLoader = new DataLoader(
+    async (countryCodes: ReadonlyArray<string>) => {
+      const countrySummaryByCountryCodes = (
+        await this.get<CountrySummary[]>("/api/country/all")
+      ).reduce(
+        (acc, cur) => ({ ...acc, [cur.code.toUpperCase()]: cur }),
+        {} as Record<string, CountrySummary>
+      );
+
+      return countryCodes.map((x) =>
+        countrySummaryByCountryCodes[x]
+          ? {
+              countryCode: countrySummaryByCountryCodes[x].code.toUpperCase(),
+              name: countrySummaryByCountryCodes[x].name,
+            }
+          : {}
+      );
+    }
+  );
+
+  async getCountries(countryCodes?: string[]) {
     const response = await this.get<CountrySummary[]>("/api/country/all");
-    return response.map((x) => ({
-      countryCode: x.code.toUpperCase(),
-      name: x.name,
-    }));
-  }
-
-  async getCountrySummary(countryCode: string) {
-    const countries = await this.getCountrySummaries();
-
-    return countries.filter((x) => x.countryCode === countryCode)[0];
+    return response
+      .filter((x) =>
+        countryCodes?.length
+          ? countryCodes.includes(x.code.toUpperCase())
+          : true
+      )
+      .map((x) => ({
+        countryCode: x.code.toUpperCase(),
+        name: x.name,
+      }));
   }
 }
 
