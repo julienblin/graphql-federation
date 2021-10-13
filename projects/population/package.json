@@ -1,0 +1,21 @@
+{
+  "name": "population",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "ts-node-dev src/index.ts"
+  },
+  "dependencies": {
+    "@apollo/federation": "^0.33.2",
+    "apollo-datasource-rest": "^3.3.0",
+    "apollo-server": "^3.4.0",
+    "dataloader": "^2.0.0",
+    "graphql": "^15.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "*",
+    "ts-node": "^10.3.0",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.4.3"
+  }
+}

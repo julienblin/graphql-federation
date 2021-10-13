@@ -23,6 +23,7 @@ type Resolvers = Record<string, Record<string, Resolver>>;
 const typeDefs = gql`
   extend type Query {
     countries(countryCodes: [String!]): [Country]
+    country(countryCode: String!): Country
   }
 
   type Country @key(fields: "countryCode") {
@@ -35,6 +36,9 @@ const resolvers: Resolvers = {
   Query: {
     countries(root, args, { dataSources }) {
       return dataSources.battutaApi.getCountries(args.countryCodes);
+    },
+    async country(root, args, { dataSources }) {
+      return (await dataSources.battutaApi.getCountries([args.countryCode]))[0];
     },
   },
   Country: {

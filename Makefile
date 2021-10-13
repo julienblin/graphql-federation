@@ -30,9 +30,17 @@ gateway-install: ## Install packages for covid19 service.
 gateway-start: ## Start services for gateway development
 	yarn --cwd /workspace/projects/gateway start
 
+.PHONY: population-install
+population-install: ## Install packages for population service.
+	yarn --cwd /workspace/projects/population install
+
+.PHONY: population-start
+population-start: ## Start services for population development
+	yarn --cwd /workspace/projects/population start
+
 .PHONY: install
-install: countries-install covid19-install gateway-install ## Install packages for all projects
+install: countries-install covid19-install gateway-install population-install ## Install packages for all projects
 
 .PHONY: start
 start: ## Start all development services
-	$(SHELL) $(.SHELLFLAGS) "trap 'kill 0' INT; make countries-start & make covid19-start & make docs-start & make gateway-start"
+	$(SHELL) $(.SHELLFLAGS) "trap 'kill 0' INT; make countries-start & make covid19-start & make population-start & make docs-start & make gateway-start"

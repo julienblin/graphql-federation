@@ -1,0 +1,11 @@
+
+@baseUrl = https://countriesnow.space/api/v0.1
+
+### Get all countries and respective population
+
+
+GET {{baseUrl}}/countries/population
+
+### Get countries and ISO2&3 Codes
+
+GET {{baseUrl}}/countries/iso
