@@ -2,7 +2,10 @@ import { ApolloServer } from "apollo-server";
 import { ApolloGateway } from "@apollo/gateway";
 
 const gateway = new ApolloGateway({
-  serviceList: [{ name: "Covid19", url: "http://localhost:4001/graphql" }],
+  serviceList: [
+    { name: "Countries", url: "http://localhost:4002/graphql" },
+    { name: "Covid19", url: "http://localhost:4001/graphql" },
+  ],
 });
 
 const server = new ApolloServer({

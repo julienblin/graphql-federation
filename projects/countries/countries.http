@@ -1,0 +1,12 @@
+@port = 4002
+
+POST http://localhost:{{port}}/graphql
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+query {
+  countries {
+    countryCode
+    name
+  }
+}

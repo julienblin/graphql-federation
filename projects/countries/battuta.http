@@ -1,0 +1,5 @@
+@baseUrl = http://battuta.medunes.net
+
+### List countries
+
+GET {{baseUrl}}/api/country/all/?key={{$dotenv %BATTUTA_API_KEY}}
