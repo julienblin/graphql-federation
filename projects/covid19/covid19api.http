@@ -1,0 +1,5 @@
+@baseUrl = https://api.covid19api.com
+
+### Summary
+
+GET {{baseUrl}}/summary

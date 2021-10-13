@@ -1,0 +1,15 @@
+# Logs
+*.log
+
+# Dotenv environment variables file
+.env
+
+# Dependency directories
+node_modules/
+
+# Compilation targets
+dist/
+
+# Coverage directory used by tools like istanbul
+coverage
+*.lcov
