@@ -1,24 +1,6 @@
 import { buildSubgraphSchema } from "@apollo/federation";
 import { ApolloServer, gql } from "apollo-server";
-import { GraphQLResolveInfo } from "graphql";
 import { BattutaApi } from "./battuta-api";
-
-interface DataSources {
-  battutaApi: BattutaApi;
-}
-
-interface Context {
-  dataSources: DataSources;
-}
-
-type Resolver = (
-  parent: unknown,
-  args: any,
-  context: Context,
-  info?: GraphQLResolveInfo
-) => unknown;
-
-type Resolvers = Record<string, Record<string, Resolver>>;
 
 const typeDefs = gql`
   extend type Query {
@@ -32,18 +14,22 @@ const typeDefs = gql`
   }
 `;
 
-const resolvers: Resolvers = {
+const resolvers = {
   Query: {
     countries(root, args, { dataSources }) {
       return dataSources.battutaApi.getCountries(args.countryCodes);
     },
     async country(root, args, { dataSources }) {
-      return (await dataSources.battutaApi.getCountries([args.countryCode]))[0];
+      return { countryCode: args.countryCode };
     },
   },
   Country: {
     async __resolveReference(root, args, { dataSources }) {
       return dataSources.battutaApi.countryLoader.load(args.countryCode);
+    },
+    async name(root, args, { dataSources }) {
+      return (await dataSources.battutaApi.countryLoader.load(root.countryCode))
+        .name;
     },
   },
 };
