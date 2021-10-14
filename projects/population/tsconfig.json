@@ -9,5 +9,5 @@
     "skipLibCheck": true,
     "noImplicitAny": false
   },
-  "include": ["src/**/*"]
+  "include": ["typings.d.ts", "src/**/*.ts", "src/**/*.graphql"]
 }

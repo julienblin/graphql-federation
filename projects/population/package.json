@@ -10,10 +10,13 @@
     "apollo-datasource-rest": "^3.3.0",
     "apollo-server": "^3.4.0",
     "dataloader": "^2.0.0",
-    "graphql": "^15.6.1"
+    "graphql": "^15.6.1",
+    "graphql-tag": "^2.12.5"
   },
   "devDependencies": {
+    "@luckycatfactory/esbuild-graphql-loader": "^3.7.0",
     "@types/node": "*",
+    "esbuild": "^0.13.6",
     "ts-node": "^10.3.0",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.4.3"

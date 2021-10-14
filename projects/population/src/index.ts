@@ -1,13 +1,7 @@
 import { buildSubgraphSchema } from "@apollo/federation";
-import { ApolloServer, gql } from "apollo-server";
+import { ApolloServer } from "apollo-server";
 import { buildDataSources } from "./datasources";
-
-const typeDefs = gql`
-  extend type Country @key(fields: "countryCode") {
-    countryCode: String! @external
-    population: Int
-  }
-`;
+import typeDefs from "./schema.graphql";
 
 const resolvers = {
   Country: {
