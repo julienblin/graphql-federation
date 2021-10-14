@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "build": "./build.js prod",
     "start": "./build.js dev 4002",
     "checks": "prettier --check . && eslint . && tsc --noEmit"
   },
