@@ -1,4 +1,8 @@
 {
+  "[graphql]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
@@ -25,7 +29,9 @@
   },
   "cSpell.words": [
     "BATTUTA",
+    "countriesnow",
     "dataloader",
-    "datasource"
+    "datasource",
+    "datasources"
   ]
 }

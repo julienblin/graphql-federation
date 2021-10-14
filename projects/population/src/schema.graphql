@@ -1,0 +1,4 @@
+extend type Country @key(fields: "countryCode") {
+  countryCode: String! @external
+  population: Int
+}

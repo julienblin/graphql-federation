@@ -1,6 +1,6 @@
 import { buildSubgraphSchema } from "@apollo/federation";
 import { ApolloServer, gql } from "apollo-server";
-import { CountriesNowApi } from "./countriesnow-api";
+import { buildDataSources } from "./datasources";
 
 const typeDefs = gql`
   extend type Country @key(fields: "countryCode") {
@@ -12,7 +12,7 @@ const typeDefs = gql`
 const resolvers = {
   Country: {
     async __resolveReference(country, { dataSources }) {
-      return dataSources.countriesNowApi.populationLoader.load(
+      return dataSources.countriesNow.populationLoader.load(
         country.countryCode
       );
     },
@@ -26,9 +26,7 @@ const server = new ApolloServer({
       resolvers: resolvers as any,
     },
   ]),
-  dataSources: () => ({
-    countriesNowApi: new CountriesNowApi(),
-  }),
+  dataSources: buildDataSources,
 });
 
 server.listen(4003).then(({ url }) => {

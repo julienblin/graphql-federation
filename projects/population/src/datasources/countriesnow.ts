@@ -1,7 +1,7 @@
 import { RESTDataSource } from "apollo-datasource-rest";
 import DataLoader from "dataloader";
 
-export class CountriesNowApi extends RESTDataSource {
+export class CountriesNow extends RESTDataSource {
   constructor() {
     super();
     this.baseURL = "https://countriesnow.space/api/v0.1/";
