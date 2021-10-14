@@ -1,13 +1,19 @@
 #!/usr/bin/env node
 
 const path = require("path");
+const fs = require("fs");
 
-const [mode, port, ...remainingArgs] = process.argv.slice(2);
+let [mode, port, ..._] = process.argv.slice(2);
+
+mode = mode || "prod";
+port = parseInt(port || "4000");
 
 if (!["dev", "prod"].includes(mode)) {
   console.error(`Unknown mode ${mode}.`);
   process.exit(1);
 }
+
+fs.rmdirSync(path.join(__dirname, "dist"), { recursive: true, force: true });
 
 let runningServer = null;
 
@@ -40,7 +46,7 @@ const purgeAppRequireCache = (buildPath) => {
 
 const startServer = () => {
   const server = require("./dist/server").server;
-  server.listen(parseInt(port)).then(({ url }) => {
+  server.listen(port).then(({ url }) => {
     console.log(`🚀 ${path.basename(__dirname)} service ready at ${url}`);
   });
   return server;
