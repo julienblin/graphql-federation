@@ -9,13 +9,6 @@ const gateway = new ApolloGateway({
   ],
 });
 
-const server = new ApolloServer({
+export const server = new ApolloServer({
   gateway,
 });
-
-server
-  .listen(3000)
-  .then(({ url }) => {
-    console.log(`🚀 Gateway ready at ${url}`);
-  })
-  .catch((err) => console.error(err));
