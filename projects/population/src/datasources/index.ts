@@ -1,10 +1,10 @@
 import { DataSources as ApolloDataSources } from "apollo-server-core/dist/requestPipeline";
 import { CountriesNow } from "./countriesnow";
 
-export type DataSources = ApolloDataSources<{
+export interface DataSources {
   countriesnow: CountriesNow;
-}>;
+}
 
-export const buildDataSources = (): DataSources => ({
-  countriesnow: new CountriesNow(),
+export const buildDataSources = (): ApolloDataSources<DataSources> => ({
+  countriesNow: new CountriesNow(),
 });
