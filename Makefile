@@ -43,4 +43,4 @@ install: countries-install covid19-install gateway-install population-install ##
 
 .PHONY: start
 start: ## Start all development services
-	$(SHELL) $(.SHELLFLAGS) "trap 'kill 0' INT; make countries-start & make covid19-start & make population-start & make docs-start"
+	trap 'kill 0' INT; make countries-start & make covid19-start & make population-start & make docs-start & sleep 5s && make gateway-start
