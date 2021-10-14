@@ -1,0 +1,9 @@
+extend type Query {
+  countries(countryCodes: [String!]): [Country]
+  country(countryCode: String!): Country
+}
+
+type Country @key(fields: "countryCode") {
+  countryCode: String!
+  name: String!
+}

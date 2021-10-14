@@ -1,0 +1,9 @@
+extend type Country @key(fields: "countryCode") {
+  countryCode: String! @external
+  covid19: CountryCovid19
+}
+
+type CountryCovid19 {
+  totalConfirmed: Int
+  totalDeath: Int
+}

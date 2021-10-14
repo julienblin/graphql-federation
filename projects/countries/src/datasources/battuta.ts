@@ -1,7 +1,7 @@
 import { RequestOptions, RESTDataSource } from "apollo-datasource-rest";
 import DataLoader from "dataloader";
 
-export class BattutaApi extends RESTDataSource {
+export class Battuta extends RESTDataSource {
   constructor() {
     super();
     this.baseURL = "http://battuta.medunes.net/";

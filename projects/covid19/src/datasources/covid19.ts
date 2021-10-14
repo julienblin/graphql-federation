@@ -1,7 +1,7 @@
 import { RESTDataSource } from "apollo-datasource-rest";
 import DataLoader from "dataloader";
 
-export class Covid19Api extends RESTDataSource {
+export class Covid19 extends RESTDataSource {
   constructor() {
     super();
     this.baseURL = "https://api.covid19api.com/";
