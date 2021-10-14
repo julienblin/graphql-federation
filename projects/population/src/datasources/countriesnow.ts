@@ -19,9 +19,7 @@ export class CountriesNow extends RESTDataSource {
         {} as Record<string, string>
       );
 
-      const populationByIso2Codes = (
-        await this.get<ApiResponse<Population>>("countries/population")
-      ).data.reduce(
+      const populationByIso2Codes = population.data.reduce(
         (acc, cur) => ({ ...acc, [iso2ByIso3[cur.code]]: cur }),
         {} as Record<string, Population>
       );
