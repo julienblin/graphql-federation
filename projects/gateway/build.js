@@ -52,7 +52,7 @@ const startServer = () => {
   return server;
 };
 
-const plugins = [];
+const plugins = [require("@luckycatfactory/esbuild-graphql-loader").default()];
 if (mode === "dev") {
   plugins.push(startPlugin());
 }
@@ -67,6 +67,7 @@ require("esbuild")
     plugins,
     watch: mode === "dev",
     sourcemap: mode === "dev",
+    minify: mode === "prod",
   })
   .catch(() => {
     process.exit(1);

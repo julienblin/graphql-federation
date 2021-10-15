@@ -67,6 +67,7 @@ require("esbuild")
     plugins,
     watch: mode === "dev",
     sourcemap: mode === "dev",
+    minify: mode === "prod",
   })
   .catch(() => {
     process.exit(1);
