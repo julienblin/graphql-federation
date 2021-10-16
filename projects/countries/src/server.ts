@@ -8,7 +8,7 @@ export const server = new ApolloServer({
   schema: buildSubgraphSchema([
     {
       typeDefs,
-      resolvers,
+      resolvers: resolvers as any,
     },
   ]),
   dataSources: buildDataSources,

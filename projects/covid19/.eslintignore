@@ -8,3 +8,5 @@ coverage
 .eslintrc.js
 jest.config.js
 build.js
+# dont' lint generated files
+schema.types.ts

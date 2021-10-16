@@ -24,17 +24,13 @@ export class CountriesNow extends RESTDataSource {
         {} as Record<string, Population>
       );
 
-      return countryCodes.map((x) =>
-        populationByIso2Codes[x]
-          ? {
-              countryCode: x,
-              population:
-                populationByIso2Codes[x].populationCounts[
-                  populationByIso2Codes[x].populationCounts.length - 1
-                ].value,
-            }
-          : {}
-      );
+      return countryCodes.map((x) => ({
+        countryCode: x,
+        population:
+          populationByIso2Codes[x]?.populationCounts[
+            populationByIso2Codes[x]?.populationCounts?.length - 1
+          ]?.value,
+      }));
     }
   );
 }

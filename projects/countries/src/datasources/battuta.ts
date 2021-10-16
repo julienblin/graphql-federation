@@ -20,18 +20,14 @@ export class Battuta extends RESTDataSource {
         {} as Record<string, CountrySummary>
       );
 
-      return countryCodes.map((x) =>
-        countrySummaryByCountryCodes[x]
-          ? {
-              countryCode: countrySummaryByCountryCodes[x].code.toUpperCase(),
-              name: countrySummaryByCountryCodes[x].name,
-            }
-          : {}
-      );
+      return countryCodes.map((x) => ({
+        countryCode: countrySummaryByCountryCodes[x]?.code?.toUpperCase() || x,
+        name: countrySummaryByCountryCodes[x]?.name || "",
+      }));
     }
   );
 
-  async getCountries(countryCodes?: string[]) {
+  async getCountries(countryCodes?: string[] | null) {
     const response = await this.get<CountrySummary[]>("/api/country/all");
     return response
       .filter((x) =>

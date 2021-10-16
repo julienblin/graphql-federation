@@ -1,10 +1,10 @@
-import { GraphQLResolverMap } from "apollo-graphql";
 import { DataSources } from "./datasources";
+import { Resolvers } from "./schema.types";
 
-export const resolvers: GraphQLResolverMap<{ dataSources: DataSources }> = {
+export const resolvers: Resolvers<{ dataSources: DataSources }> = {
   Country: {
     async __resolveReference(country, { dataSources }) {
-      return dataSources.countriesNow.populationLoader.load(
+      return dataSources.countriesnow.populationLoader.load(
         country.countryCode
       );
     },
