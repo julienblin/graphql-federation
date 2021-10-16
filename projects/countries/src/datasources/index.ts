@@ -1,10 +1,7 @@
-import { DataSources as ApolloDataSources } from "apollo-server-core/dist/requestPipeline";
 import { Battuta } from "./battuta";
 
-export interface DataSources {
-  battuta: Battuta;
-}
-
-export const buildDataSources = (): ApolloDataSources<DataSources> => ({
+export const buildDataSources = () => ({
   battuta: new Battuta(),
 });
+
+export type DataSources = ReturnType<typeof buildDataSources>;
