@@ -59,6 +59,7 @@ population-start: ## Start services for population development
 
 .PHONY: install
 install: countries-install covid19-install gateway-install population-install ## Install packages for all projects
+	yarn install
 
 .PHONY: build
 build: countries-build covid19-build docs-build gateway-build population-build ## Build all services

@@ -8,5 +8,6 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["typings.d.ts", "src/**/*.ts", "src/**/*.graphql"]
+  "include": ["typings.d.ts", "src/**/*.ts", "src/**/*.graphql"],
+  "types": [ "jest" ]
 }
