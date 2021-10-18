@@ -6,15 +6,14 @@ describe("Fetch countries", () => {
     const result = await server.executeOperation({
       query: gql`
         query GetCountries {
-          countries: {
+          countries {
             countryCode
             name
           }
-        }`,
+        }
+      `,
     });
 
-    console.log(result);
-
-    expect(true).toBeTruthy();
+    expect(result.data.countries.length).toBeTruthy();
   });
 });
