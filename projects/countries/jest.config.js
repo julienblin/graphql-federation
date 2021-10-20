@@ -3,7 +3,7 @@
 module.exports = {
   testEnvironment: "node",
   modulePathIgnorePatterns: ["dist/"],
-  coveragePathIgnorePatterns: ["test/"],
+  coveragePathIgnorePatterns: ["test/", "graphql"],
   reporters: ["default"],
   coverageReporters: ["text", "lcov", "cobertura"],
   transform: {

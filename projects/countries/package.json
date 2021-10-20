@@ -8,7 +8,7 @@
     "build": "./build.js prod",
     "start": "./build.js dev 4002",
     "checks": "prettier --check . && eslint . && tsc --noEmit",
-    "test": "jest",
+    "test": "jest --coverage",
     "test-watch": "jest --watch",
     "write-version": "echo \"export default \\\"`git rev-parse --short HEAD`\\\";\" > src/version.ts"
   },
