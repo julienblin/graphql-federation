@@ -1,6 +1,6 @@
 [
     {
-        "scope": "http://battuta.medunes.net",
+        "scope": "http://battuta.medunes.net:80",
         "method": "GET",
         "path": "/api/country/all/?key=bd544222179a9fde5c977f7d9ee34acd",
         "body": "",
@@ -935,7 +935,7 @@
             "Connection",
             "close",
             "Date",
-            "Mon, 18 Oct 2021 15:48:24 GMT",
+            "Wed, 20 Oct 2021 13:35:51 GMT",
             "Server",
             "Apache",
             "Cache-Control",

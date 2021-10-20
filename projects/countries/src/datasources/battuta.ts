@@ -9,6 +9,7 @@ export class Battuta extends RESTDataSource {
 
   willSendRequest(request: RequestOptions) {
     request.params.append("key", process.env["BATTUTA_API_KEY"]!);
+    request.headers.append("User-Agent", "countries");
   }
 
   countryLoader = new DataLoader(

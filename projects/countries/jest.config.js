@@ -7,7 +7,7 @@ module.exports = {
   reporters: ["default"],
   coverageReporters: ["text", "lcov", "cobertura"],
   transform: {
-    "\\.tsx?$": "esbuild-jest",
+    "\\.tsx?$": ["esbuild-jest", { sourcemap: true }],
     "\\.(gql|graphql)$": "jest-transform-graphql",
   },
 };
