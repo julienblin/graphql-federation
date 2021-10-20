@@ -9,7 +9,8 @@
     "start": "./build.js dev 4002",
     "checks": "prettier --check . && eslint . && tsc --noEmit",
     "test": "jest",
-    "test-watch": "jest --watch"
+    "test-watch": "jest --watch",
+    "write-version": "echo \"export default \\\"`git rev-parse --short HEAD`\\\";\" > src/version.ts"
   },
   "dependencies": {
     "@apollo/federation": "^0.33.2",

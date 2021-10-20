@@ -1,5 +1,7 @@
 import { RequestOptions, RESTDataSource } from "apollo-datasource-rest";
 import DataLoader from "dataloader";
+import config from "../config";
+import version from "../version";
 
 export class Battuta extends RESTDataSource {
   constructor() {
@@ -8,8 +10,8 @@ export class Battuta extends RESTDataSource {
   }
 
   willSendRequest(request: RequestOptions) {
-    request.params.append("key", process.env["BATTUTA_API_KEY"]!);
-    request.headers.append("User-Agent", "countries");
+    request.params.append("key", config.battutaApiKey);
+    request.headers.append("User-Agent", `countries/${version}`);
   }
 
   countryLoader = new DataLoader(
