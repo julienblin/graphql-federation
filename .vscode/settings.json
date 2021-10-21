@@ -38,9 +38,11 @@
   },
   "cSpell.words": [
     "BATTUTA",
+    "codegen",
     "countriesnow",
     "dataloader",
     "datasource",
-    "datasources"
+    "datasources",
+    "supergraph"
   ]
 }

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "codegen": "rover supergraph compose --config ./supergraph-config.yml > src/supergraph.graphql",
     "build": "./build.js prod",
     "start": "./build.js dev 3000",
     "checks": "prettier --check . && eslint . && tsc --noEmit"
@@ -15,11 +16,11 @@
     "graphql-tag": "^2.12.5"
   },
   "devDependencies": {
-    "@luckycatfactory/esbuild-graphql-loader": "^3.7.0",
     "@types/node": "*",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "esbuild": "^0.13.6",
+    "esbuild-plugin-inline-import": "^1.0.1",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-jest": "^25.1.0",

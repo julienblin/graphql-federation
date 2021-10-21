@@ -64,6 +64,10 @@ install: countries-install covid19-install gateway-install population-install ##
 .PHONY: build
 build: countries-build covid19-build docs-build gateway-build population-build ## Build all services
 
+.PHONY: compose-supergraph
+compose-supergraph: ## Start all microservices and compose the graphql supergraph.
+	make countries-start & make covid19-start & make population-start & sleep 10s && yarn --cwd /workspace/projects/gateway codegen && kill 0 INT
+
 .PHONY: start
-start: ## Start all development services
-	trap 'kill 0' INT; make countries-start & make covid19-start & make population-start & make docs-start & sleep 5s && make gateway-start
+start: ## Start the complete environment
+	trap 'kill 0' INT; make countries-start & make covid19-start & make population-start & make gateway-start && make docs-start

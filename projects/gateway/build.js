@@ -52,7 +52,7 @@ const startServer = () => {
   return server;
 };
 
-const plugins = [require("@luckycatfactory/esbuild-graphql-loader").default()];
+const plugins = [require("esbuild-plugin-inline-import")()];
 if (mode === "dev") {
   plugins.push(startPlugin());
 }
