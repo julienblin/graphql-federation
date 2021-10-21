@@ -31,11 +31,30 @@ RUN apt-get update \
 ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
 CMD [ "sleep", "infinity" ]
 
+# Install Apollo Rover CLI
+# Build from source if running on ARM (see https://github.com/apollographql/rover/issues/582)
+RUN if [ "$(arch)" = "aarch64" ] \
+    then \
+        curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly -y \
+        && source $HOME/.cargo/env \
+        && cargo install --git https://github.com/apollographql/rover.git rover \
+    else \
+      npm install -g @apollo/rover \
+    fi
+
 # [Optional] Uncomment this section to install additional OS packages.
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends graphviz
+    && apt-get -y install --no-install-recommends graphviz nginx
 
+# Install MkDocs and PlantUML for documentation and diagrams
 COPY plantuml.jar /usr/local/bin
 COPY plantuml /usr/local/bin
-
 RUN pip install mkdocs mkdocs-material plantuml-markdown
+
+# Install MITM Proxy, useful tool when running in remote docker
+RUN wget -qO- https://snapshots.mitmproxy.org/7.0.4/mitmproxy-7.0.4-linux.tar.gz | tar xvfz - -C /usr/local/bin
+
+# Configure nginx reverse proxy
+RUN unlink /etc/nginx/sites-enabled/default \
+    && echo "server { listen 9411; location / { proxy_pass http://zipkin:9411; }}" >> /etc/nginx/sites-available/zipkin-proxy \
+    && link /etc/nginx/sites-available/zipkin-proxy /etc/nginx/sites-enabled/zipkin-proxy
