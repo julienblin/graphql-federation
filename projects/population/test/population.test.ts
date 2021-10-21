@@ -3,8 +3,8 @@ import { Country } from "../src/schema.types";
 import { server } from "../src/server";
 import { captureHttp } from "./nock-support";
 
-describe("covid19", () => {
-  it("should return covid19 stats", async () => {
+describe("population", () => {
+  it("should return the population of a country", async () => {
     const result = await captureHttp(async () => {
       return await server.executeOperation({
         query: gql`
@@ -12,10 +12,7 @@ describe("covid19", () => {
             _entities(representations: $representations) {
               ... on Country {
                 countryCode
-                covid19 {
-                  totalConfirmed
-                  totalDeath
-                }
+                population
               }
             }
           }
@@ -32,14 +29,11 @@ describe("covid19", () => {
     expect(result.errors).toBeFalsy();
     expect(result.data._entities[0]).toMatchObject(<Country>{
       countryCode: "CA",
-      covid19: {
-        totalConfirmed: expect.any(Number),
-        totalDeath: expect.any(Number),
-      },
+      population: expect.any(Number),
     });
   });
 
-  it("should return nothing when country not found", async () => {
+  it("should return nothing when country is not found.", async () => {
     const result = await captureHttp(async () => {
       return await server.executeOperation({
         query: gql`
@@ -47,10 +41,7 @@ describe("covid19", () => {
             _entities(representations: $representations) {
               ... on Country {
                 countryCode
-                covid19 {
-                  totalConfirmed
-                  totalDeath
-                }
+                population
               }
             }
           }
@@ -67,10 +58,7 @@ describe("covid19", () => {
     expect(result.errors).toBeFalsy();
     expect(result.data._entities[0]).toMatchObject(<Country>{
       countryCode: "XX",
-      covid19: {
-        totalConfirmed: null,
-        totalDeath: null,
-      },
+      population: null,
     });
   });
 });
