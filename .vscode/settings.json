@@ -34,6 +34,7 @@
   "files.exclude": {
     "**/node_modules": true,
     "**/dist": true,
+    "**/coverage": true,
   },
   "cSpell.words": [
     "BATTUTA",

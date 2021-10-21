@@ -6,7 +6,7 @@
     "codegen": "graphql-codegen --config codegen.yml",
     "prebuild": "yarn codegen",
     "build": "./build.js prod",
-    "start": "./build.js dev 4002",
+    "start": "./build.js dev 4001",
     "checks": "prettier --check . && eslint . && tsc --noEmit",
     "test": "jest --coverage",
     "test-watch": "jest --watch",
