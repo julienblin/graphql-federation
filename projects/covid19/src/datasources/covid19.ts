@@ -1,10 +1,19 @@
-import { RESTDataSource } from "apollo-datasource-rest";
+import { RequestOptions, RESTDataSource } from "apollo-datasource-rest";
 import DataLoader from "dataloader";
+import config from "../config";
+import version from "../version";
 
 export class Covid19 extends RESTDataSource {
   constructor() {
     super();
     this.baseURL = "https://api.covid19api.com/";
+  }
+
+  willSendRequest(request: RequestOptions) {
+    request.headers.append(
+      "User-Agent",
+      `${config.serviceName}/${version} (${config.environment})`
+    );
   }
 
   summaryLoader = new DataLoader(

@@ -13,7 +13,7 @@ export class Battuta extends RESTDataSource {
     request.params.append("key", config.battutaApiKey);
     request.headers.append(
       "User-Agent",
-      `countries/${version} (${config.environment})`
+      `${config.serviceName}/${version} (${config.environment})`
     );
   }
 
