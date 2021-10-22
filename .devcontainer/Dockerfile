@@ -24,23 +24,12 @@ RUN apt-get update \
     # Use Docker script from script library to set things up
     && /bin/bash /tmp/library-scripts/docker-debian.sh "${ENABLE_NONROOT_DOCKER}" "/var/run/docker-host.sock" "/var/run/docker.sock" "${USERNAME}" \
     # Clean up
-    && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts/
+    && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 # Setting the ENTRYPOINT to docker-init.sh will configure non-root access 
 # to the Docker socket. The script will also execute CMD as needed.
 ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
 CMD [ "sleep", "infinity" ]
-
-# Install Apollo Rover CLI
-# Build from source if running on ARM (see https://github.com/apollographql/rover/issues/582)
-RUN if [ "$(arch)" = "aarch64" ] \
-    then \
-        curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly -y \
-        && source $HOME/.cargo/env \
-        && cargo install --git https://github.com/apollographql/rover.git rover \
-    else \
-      npm install -g @apollo/rover \
-    fi
 
 # [Optional] Uncomment this section to install additional OS packages.
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
