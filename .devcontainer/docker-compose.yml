@@ -34,3 +34,25 @@ services:
 
   zipkin:
     image: openzipkin/zipkin-slim
+
+  minio:
+    image: minio/minio
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+
+  # heimdall:
+  #   image: lscr.io/linuxserver/heimdall
+  #   container_name: heimdall
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - TZ=Europe/London
+  #   volumes:
+  #     - </path/to/appdata/config>:/config
+  #   ports:
+  #     - 80:80
+  #     - 443:443
+
+volumes:
+  minio_data:

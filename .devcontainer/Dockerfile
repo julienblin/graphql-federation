@@ -38,7 +38,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 # Install MkDocs and PlantUML for documentation and diagrams
 COPY plantuml.jar /usr/local/bin
 COPY plantuml /usr/local/bin
-RUN pip install mkdocs mkdocs-material plantuml-markdown
+RUN pip install mkdocs mkdocs-material plantuml-markdown 
 
 # Install MITM Proxy, useful tool when running in remote docker
 RUN wget -qO- https://snapshots.mitmproxy.org/7.0.4/mitmproxy-7.0.4-linux.tar.gz | tar xvfz - -C /usr/local/bin
@@ -46,4 +46,9 @@ RUN wget -qO- https://snapshots.mitmproxy.org/7.0.4/mitmproxy-7.0.4-linux.tar.gz
 # Configure nginx reverse proxy
 RUN unlink /etc/nginx/sites-enabled/default \
     && echo "server { listen 9411; location / { proxy_pass http://zipkin:9411; }}" >> /etc/nginx/sites-available/zipkin-proxy \
-    && link /etc/nginx/sites-available/zipkin-proxy /etc/nginx/sites-enabled/zipkin-proxy
+    && link /etc/nginx/sites-available/zipkin-proxy /etc/nginx/sites-enabled/zipkin-proxy \
+    && echo "server { listen 9001; location / { proxy_pass http://minio:9001; }}" >> /etc/nginx/sites-available/minio-proxy \
+    && link /etc/nginx/sites-available/minio-proxy /etc/nginx/sites-enabled/minio-proxy
+
+# Install SAM Cli
+RUN pip install aws-sam-cli
