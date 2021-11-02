@@ -33,12 +33,12 @@ CMD [ "sleep", "infinity" ]
 
 # [Optional] Uncomment this section to install additional OS packages.
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends graphviz nginx
+    && apt-get -y install --no-install-recommends graphviz nginx python3 python3-pip
 
 # Install MkDocs and PlantUML for documentation and diagrams
 COPY plantuml.jar /usr/local/bin
 COPY plantuml /usr/local/bin
-RUN pip install mkdocs mkdocs-material plantuml-markdown 
+RUN pip3 install mkdocs mkdocs-material plantuml-markdown 
 
 # Install MITM Proxy, useful tool when running in remote docker
 RUN wget -qO- https://snapshots.mitmproxy.org/7.0.4/mitmproxy-7.0.4-linux.tar.gz | tar xvfz - -C /usr/local/bin
