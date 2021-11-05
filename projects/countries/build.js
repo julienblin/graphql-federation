@@ -13,7 +13,9 @@ if (!["dev", "prod"].includes(mode)) {
   process.exit(1);
 }
 
-fs.rmdirSync(path.join(__dirname, "dist"), { recursive: true, force: true });
+if (fs.existsSync(path.join(__dirname, "dist"))) {
+  fs.rmdirSync(path.join(__dirname, "dist"), { recursive: true, force: true });
+}
 
 let runningServer = null;
 

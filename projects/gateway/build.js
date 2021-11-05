@@ -13,7 +13,9 @@ if (!["dev", "prod"].includes(mode)) {
   process.exit(1);
 }
 
-fs.rmdirSync(path.join(__dirname, "dist"), { recursive: true, force: true });
+if (fs.existsSync(path.join(__dirname, "dist"))) {
+  fs.rmdirSync(path.join(__dirname, "dist"), { recursive: true, force: true });
+}
 
 let runningServer = null;
 
@@ -26,6 +28,9 @@ const startPlugin = () => {
           console.log(`♻️ ${path.basename(__dirname)} service restarting...`);
           runningServer.stop().then(() => {
             purgeAppRequireCache(path.resolve(__dirname, "./dist/server.js"));
+            purgeAppRequireCache(
+              path.resolve(__dirname, "./dist/telemetry.js")
+            );
             runningServer = startServer();
           });
         } else {
@@ -45,6 +50,7 @@ const purgeAppRequireCache = (buildPath) => {
 };
 
 const startServer = () => {
+  require("./dist/telemetry");
   const server = require("./dist/server").server;
   server.listen(port).then(({ url }) => {
     console.log(`🚀 ${path.basename(__dirname)} service ready at ${url}`);
@@ -59,7 +65,7 @@ if (mode === "dev") {
 
 require("esbuild")
   .build({
-    entryPoints: ["src/server.ts"],
+    entryPoints: ["src/server.ts", "src/telemetry.ts"],
     bundle: true,
     platform: "node",
     target: "node14",

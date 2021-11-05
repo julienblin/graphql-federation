@@ -20,7 +20,7 @@
     "@opentelemetry/instrumentation-express": "0.24",
     "@opentelemetry/instrumentation-graphql": "0.24",
     "@opentelemetry/instrumentation-http": "0.24",
-    "@opentelemetry/node": "^0.24.0",
+    "@opentelemetry/node": "0.24",
     "apollo-datasource-rest": "^3.3.0",
     "apollo-server": "^3.4.0",
     "dataloader": "^2.0.0",

@@ -11,6 +11,12 @@
   "dependencies": {
     "@apollo/federation": "^0.33.2",
     "@apollo/gateway": "^0.42.2",
+    "@opentelemetry/api": "^1.0.3",
+    "@opentelemetry/core": "0.24",
+    "@opentelemetry/exporter-zipkin": "0.24",
+    "@opentelemetry/instrumentation-express": "0.24",
+    "@opentelemetry/instrumentation-http": "0.24",
+    "@opentelemetry/node": "^0.24.0",
     "apollo-server": "^3.4.0",
     "graphql": "^15.6.1",
     "graphql-tag": "^2.12.5"
