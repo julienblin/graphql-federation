@@ -1,2 +1,3 @@
-# Ignore dist
+coverage/
 dist/
+test/__nock__/

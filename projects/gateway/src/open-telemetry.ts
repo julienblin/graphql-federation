@@ -4,7 +4,10 @@ import { ExpressInstrumentation } from "@opentelemetry/instrumentation-express";
 import { HttpInstrumentation } from "@opentelemetry/instrumentation-http";
 import { NodeTracerProvider } from "@opentelemetry/node";
 import { Resource } from "@opentelemetry/resources";
-import { SimpleSpanProcessor } from "@opentelemetry/tracing";
+import {
+  BatchSpanProcessor,
+  SimpleSpanProcessor,
+} from "@opentelemetry/tracing";
 import config from "./config";
 
 registerInstrumentations({
@@ -20,11 +23,17 @@ const provider = new NodeTracerProvider({
 });
 
 provider.addSpanProcessor(
-  new SimpleSpanProcessor(
-    new ZipkinExporter({
-      url: config.openTelemetryUrl,
-    })
-  )
+  config.environment === "dev"
+    ? new SimpleSpanProcessor(
+        new ZipkinExporter({
+          url: config.openTelemetryUrl,
+        })
+      )
+    : new BatchSpanProcessor(
+        new ZipkinExporter({
+          url: config.openTelemetryUrl,
+        })
+      )
 );
 
 provider.register();

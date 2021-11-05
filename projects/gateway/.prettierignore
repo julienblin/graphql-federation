@@ -1,2 +1,4 @@
-# Ignore dist
+coverage/
 dist/
+src/supergraph.graphql
+test/__nock__/

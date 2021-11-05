@@ -5,7 +5,7 @@
   "scripts": {
     "codegen": "rover supergraph compose --config ./supergraph-config.yml > src/supergraph.graphql",
     "build": "./build.js prod",
-    "start": "./build.js dev 3000",
+    "start": "NODE_ENV=dev PORT=3000 ./build.js dev",
     "checks": "prettier --check . && eslint . && tsc --noEmit"
   },
   "dependencies": {
