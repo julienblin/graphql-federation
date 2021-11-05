@@ -20,7 +20,7 @@ export class Battuta extends RESTDataSource {
   countryLoader = new DataLoader(
     async (countryCodes: ReadonlyArray<string>) => {
       const countrySummaryByCountryCodes = (
-        await this.get<CountrySummary[]>("/api/country/all")
+        await this.get<CountrySummary[]>("/api/country/all/")
       ).reduce(
         (acc, cur) => ({ ...acc, [cur.code.toUpperCase()]: cur }),
         {} as Record<string, CountrySummary>
@@ -34,7 +34,7 @@ export class Battuta extends RESTDataSource {
   );
 
   async getCountries(countryCodes?: string[] | null) {
-    const response = await this.get<CountrySummary[]>("/api/country/all");
+    const response = await this.get<CountrySummary[]>("/api/country/all/");
     return response
       .filter((x) =>
         countryCodes?.length

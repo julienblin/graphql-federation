@@ -2,29 +2,6 @@
     {
         "scope": "http://battuta.medunes.net:80",
         "method": "GET",
-        "path": "/api/country/all?key=bd544222179a9fde5c977f7d9ee34acd",
-        "body": "",
-        "status": 301,
-        "response": "",
-        "rawHeaders": [
-            "Content-Type",
-            "text/html; charset=UTF-8",
-            "Transfer-Encoding",
-            "chunked",
-            "Connection",
-            "close",
-            "Date",
-            "Thu, 21 Oct 2021 12:10:17 GMT",
-            "Server",
-            "Apache",
-            "Location",
-            "http://battuta.medunes.net/api/country/all/?key=bd544222179a9fde5c977f7d9ee34acd"
-        ],
-        "responseIsBinary": false
-    },
-    {
-        "scope": "http://battuta.medunes.net:80",
-        "method": "GET",
         "path": "/api/country/all/?key=bd544222179a9fde5c977f7d9ee34acd",
         "body": "",
         "status": 200,
@@ -958,7 +935,7 @@
             "Connection",
             "close",
             "Date",
-            "Thu, 21 Oct 2021 12:10:18 GMT",
+            "Fri, 05 Nov 2021 20:38:56 GMT",
             "Server",
             "Apache",
             "Cache-Control",
