@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.202.3/containers/docker-from-docker-compose
 {
-	"name": "GraphQL Federation Monorepo",
+	"name": "GraphQL Federation Sample",
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "devcontainer",
 	"workspaceFolder": "/workspace",
@@ -24,25 +24,15 @@
 		"github.vscode-pull-request-github",
     "graphql.vscode-graphql",
     "humao.rest-client",
-		"jebbs.plantuml",
-    "ms-azuretools.vscode-docker",
     "ryanluker.vscode-coverage-gutters",
     "streetsidesoftware.code-spell-checker",
 		"vsls-contrib.codetour",
     "wmaurer.change-case",
-    "yzhang.markdown-all-in-one"
 	],
 
-	"forwardPorts": [3000, 4001, 4002, 4003, 9001, 9411],
-	"postCreateCommand": "sudo service nginx start && /tmp/library-scripts/install-rover.sh",
+	"forwardPorts": [3000, 4001, 4002, 4003],
+	
   "postStartCommand": "make install",
 
-	"remoteUser": "vscode",
-	"features": {
-		"docker-from-docker": "latest",
-		"git": "latest",
-		"node": "lts",
-		"python": "3.9",
-		"java": "lts"
-	}
+	"remoteUser": "node"
 }

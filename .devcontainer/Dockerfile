@@ -1,54 +1,17 @@
-# Note: You can use any Debian/Ubuntu based image you want. 
-FROM mcr.microsoft.com/vscode/devcontainers/base:0-bullseye
-
-# [Option] Install zsh
-ARG INSTALL_ZSH="true"
-# [Option] Upgrade OS packages to their latest versions
-ARG UPGRADE_PACKAGES="false"
-# [Option] Enable non-root Docker access in container
-ARG ENABLE_NONROOT_DOCKER="true"
-# [Option] Use the OSS Moby CLI instead of the licensed Docker CLI
-ARG USE_MOBY="true"
-
-# Enable new "BUILDKIT" mode for Docker CLI
-ENV DOCKER_BUILDKIT=1
-
-# Install needed packages and setup non-root user. Use a separate RUN statement to add your
-# own dependencies. A user of "automatic" attempts to reuse an user ID if one already exists.
-ARG USERNAME=automatic
-ARG USER_UID=1000
-ARG USER_GID=$USER_UID
-COPY library-scripts/*.sh /tmp/library-scripts/
-RUN apt-get update \
-    && /bin/bash /tmp/library-scripts/common-debian.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}" "true" "true" \
-    # Use Docker script from script library to set things up
-    && /bin/bash /tmp/library-scripts/docker-debian.sh "${ENABLE_NONROOT_DOCKER}" "/var/run/docker-host.sock" "/var/run/docker.sock" "${USERNAME}" \
-    # Clean up
-    && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
-
-# Setting the ENTRYPOINT to docker-init.sh will configure non-root access 
-# to the Docker socket. The script will also execute CMD as needed.
-ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
-CMD [ "sleep", "infinity" ]
+# [Choice] Node.js version (use -bullseye variants on local arm64/Apple Silicon): 16, 14, 12, 16-bullseye, 14-bullseye, 12-bullseye, 16-buster, 14-buster, 12-buster
+ARG VARIANT=16-bullseye
+FROM mcr.microsoft.com/vscode/devcontainers/typescript-node:${VARIANT}
 
 # [Optional] Uncomment this section to install additional OS packages.
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends graphviz nginx python3 python3-pip
+# RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+#     && apt-get -y install --no-install-recommends <your-package-list-here>
 
-# Install MkDocs and PlantUML for documentation and diagrams
-COPY plantuml.jar /usr/local/bin
-COPY plantuml /usr/local/bin
-RUN pip3 install mkdocs mkdocs-material plantuml-markdown 
+# [Optional] Uncomment if you want to install an additional version of node using nvm
+# ARG EXTRA_NODE_VERSION=10
+# RUN su node -c "source /usr/local/share/nvm/nvm.sh && nvm install ${EXTRA_NODE_VERSION}"
 
-# Install MITM Proxy, useful tool when running in remote docker
-RUN wget -qO- https://snapshots.mitmproxy.org/7.0.4/mitmproxy-7.0.4-linux.tar.gz | tar xvfz - -C /usr/local/bin
+# [Optional] Uncomment if you want to install more global node packages
+# RUN su node -c "npm install -g <your-package-list -here>"
 
-# Configure nginx reverse proxy
-RUN unlink /etc/nginx/sites-enabled/default \
-    && echo "server { listen 9411; location / { proxy_pass http://zipkin:9411; }}" >> /etc/nginx/sites-available/zipkin-proxy \
-    && link /etc/nginx/sites-available/zipkin-proxy /etc/nginx/sites-enabled/zipkin-proxy \
-    && echo "server { listen 9001; location / { proxy_pass http://minio:9001; }}" >> /etc/nginx/sites-available/minio-proxy \
-    && link /etc/nginx/sites-available/minio-proxy /etc/nginx/sites-enabled/minio-proxy
-
-# Install SAM Cli
-RUN pip install aws-sam-cli
+COPY *.sh /tmp/
+RUN su node -c "/tmp/install-rover.sh" && rm -rf /tmp/*

@@ -26,14 +26,6 @@ covid19-build: ## Build covid19 service.
 covid19-start: ## Start services for covid19 development
 	yarn --cwd /workspace/projects/covid19 start
 
-.PHONY: docs-build
-docs-build: ## Build docs
-	mkdocs build -f /workspace/projects/docs/mkdocs.yml
-
-.PHONY: docs-start
-docs-start: ## Start services for documentation development
-	mkdocs serve -f /workspace/projects/docs/mkdocs.yml
-
 .PHONY: gateway-install
 gateway-install: ## Install packages for covid19 service.
 	yarn --cwd /workspace/projects/gateway install
@@ -62,8 +54,8 @@ install: countries-install covid19-install gateway-install population-install ##
 	yarn install
 
 .PHONY: build
-build: countries-build covid19-build docs-build gateway-build population-build ## Build all services
+build: countries-build covid19-build gateway-build population-build ## Build all services
 
 .PHONY: start
 start: ## Start the complete environment
-	trap 'kill 0' INT; make countries-start & make covid19-start & make population-start & make gateway-start && make docs-start
+	trap 'kill 0' INT; make countries-start & make covid19-start & make population-start & make gateway-start
