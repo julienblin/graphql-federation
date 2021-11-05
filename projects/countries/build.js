@@ -25,6 +25,9 @@ const startPlugin = () => {
         if (runningServer) {
           console.log(`♻️ ${path.basename(__dirname)} service restarting...`);
           runningServer.stop().then(() => {
+            purgeAppRequireCache(
+              path.resolve(__dirname, "./dist/telemetry.js")
+            );
             purgeAppRequireCache(path.resolve(__dirname, "./dist/server.js"));
             runningServer = startServer();
           });
@@ -45,6 +48,7 @@ const purgeAppRequireCache = (buildPath) => {
 };
 
 const startServer = () => {
+  require("./dist/telemetry");
   const server = require("./dist/server").server;
   server.listen(port).then(({ url }) => {
     console.log(`🚀 ${path.basename(__dirname)} service ready at ${url}`);
@@ -59,7 +63,7 @@ if (mode === "dev") {
 
 require("esbuild")
   .build({
-    entryPoints: ["src/server.ts"],
+    entryPoints: ["src/server.ts", "src/telemetry.ts"],
     bundle: true,
     platform: "node",
     target: "node14",
