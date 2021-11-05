@@ -7,7 +7,7 @@ PROJECTS = countries covid19 gateway population
 
 .PHONY: install
 install: ## Install packages for all projects
-	@for project in $(PROJECTS); do yarn --cwd /workspace/projects/$$project; done && yarn .
+	@for project in $(PROJECTS); do yarn --cwd /workspace/projects/$$project; done && yarn
 
 .PHONY: build
 build: ## Build all projects
