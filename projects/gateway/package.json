@@ -6,7 +6,8 @@
     "codegen": "rover supergraph compose --config ./supergraph-config.yml > src/supergraph.graphql",
     "build": "./build.js prod",
     "start": "NODE_ENV=dev PORT=3000 ./build.js dev",
-    "checks": "prettier --check . && eslint . && tsc --noEmit"
+    "test": "echo \"No tests for gateway yet.\"",
+    "checks": "prettier --loglevel warn --check . && eslint . && tsc --noEmit"
   },
   "dependencies": {
     "@apollo/federation": "^0.33.2",

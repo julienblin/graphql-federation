@@ -7,7 +7,7 @@
     "prebuild": "yarn codegen",
     "build": "./build.js prod",
     "start": "NODE_ENV=dev PORT=4002 ./build.js dev",
-    "checks": "prettier --check . && eslint . && tsc --noEmit",
+    "checks": "prettier --loglevel warn --check . && eslint . && tsc --noEmit",
     "test": "jest --coverage",
     "test-watch": "jest --watch",
     "write-version": "echo \"export default \\\"`git rev-parse --short HEAD`\\\";\" > src/version.ts"
